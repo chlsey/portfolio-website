@@ -67,3 +67,84 @@ a {
   font-size: 3rem;
 }
 
+
+.landing-page {
+  display: grid;
+  gap: 32px;
+  align-content: start;
+}
+
+.landing-intro {
+  max-width: 520px;
+}
+
+.aquarium {
+  position: relative;
+  width: 100%;
+  min-height: 280px;
+  aspect-ratio: 4482 / 1903;
+  overflow: hidden;
+  isolation: isolate;
+  border: 1px solid #6d8790;
+  border-radius: 8px;
+  background: url("/aquarium/background.jpg") center / cover no-repeat;
+  box-shadow: 0 12px 28px rgb(16 24 32 / 20%);
+}
+
+.fish {
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+  will-change: transform;
+  animation-name: fish-cross;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+.fish-bob {
+  width: 100%;
+  animation: fish-bob 2.5s ease-in-out infinite;
+}
+
+.fish-bob--left {
+  transform: scaleX(-1);
+}
+
+.fish-image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@keyframes fish-cross {
+  /* using translate rather than left due to better GPU use
+   (without triggering layout recalculations on every frame) */
+  to {
+    transform: translateX(var(--fish-travel));
+  }
+}
+
+@keyframes fish-bob {
+  0%,
+  100% {
+    translate: 0 -4px;
+  }
+
+  50% {
+    translate: 0 5px;
+  }
+}
+
+@media (max-width: 700px) {
+  .page {
+    padding: 32px 24px;
+  }
+
+  .landing-page {
+    gap: 24px;
+  }
+
+  .aquarium {
+    min-height: 220px;
+  }
+}
