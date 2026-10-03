@@ -1,10 +1,12 @@
 import { NavLink } from "react-router-dom";
 
+const fishIcon = `${import.meta.env.BASE_URL}fish/fish-1.png`;
+
 const navigationItems = [
-    { to: "/about", label: "About", icon: "/fish/fish-1.png" },
-    { to: "/projects", label: "Projects", icon: "/fish/fish-1.png" },
-    { to: "/art", label: "Art", icon: "/fish/fish-1.png" },
-    { to: "/hobbies", label: "Hobbies", icon: "/fish/fish-1.png" },
+  { to: "/about", label: "About", icon: fishIcon },
+  { to: "/projects", label: "Projects", icon: fishIcon },
+  { to: "/art", label: "Art", icon: fishIcon },
+  { to: "/hobbies", label: "Hobbies", icon: fishIcon },
 ];
 
 function Navbar() {

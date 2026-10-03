@@ -7,7 +7,7 @@
 
 body {
   margin: 0;
-  background: url("/desktop/screen_bg.jpg") center / cover fixed no-repeat;
+  background: url("/portfolio-website/desktop/screen_bg.jpg") center / cover fixed no-repeat;
   color: #1f2933;
 }
 
@@ -134,7 +134,7 @@ a {
   isolation: isolate;
   border: 1px solid #6d8790;
   border-radius: 8px;
-  background: url("/aquarium/background.jpg") center / cover no-repeat;
+  background: url("/portfolio-website/aquarium/background.jpg") center / cover no-repeat;
   box-shadow: 0 12px 28px rgb(16 24 32 / 20%);
 }
 
