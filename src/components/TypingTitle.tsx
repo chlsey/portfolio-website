@@ -7,7 +7,8 @@ type TypingTitleProps = {
     pauseDuration?: number;
 };
 
-function TypingTitle({ name, typingSpeed = 100, pauseDuration = 2000 }: TypingTitleProps) {
+// function TypingTitle({ name, typingSpeed = 100, pauseDuration = 2000 }: TypingTitleProps) {
+function TypingTitle({ name }: TypingTitleProps) {
     const [typedName, setTypedName] = useState("");
 
     useEffect(() => {

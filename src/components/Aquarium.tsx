@@ -1,15 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { Fish, type FishProps } from "./Fish";
+import { fishSources } from "../data/fish";
 
 type SwimmingFish = Omit<FishProps, "tankWidth" | "onExit"> & {
   id: string;
 };
-
-const fishSources = [
-  "/fish/fish-1.png",
-  "/fish/fish-2.png",
-  "/fish/fish-3.png",
-];
 
 function randomBetween(min: number, max: number) {
   return min + Math.random() * (max - min);
