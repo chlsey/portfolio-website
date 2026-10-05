@@ -1,14 +1,54 @@
+/* ── Fonts ───────────────────────────────────────────────── */
+/* MS Sans Serif, the Windows 95 system font, self-hosted from
+   the 98.css project (MIT licensed): https://github.com/jdan/98.css */
+
+@font-face {
+  font-family: "MS Sans Serif";
+  src: url("/portfolio-website/fonts/ms_sans_serif.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "MS Sans Serif";
+  src: url("/portfolio-website/fonts/ms_sans_serif_bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ── Reset ───────────────────────────────────────────────── */
+
 *,
 *::before,
 *::after {
   box-sizing: border-box;
-  font-family: Helvetica, Arial, sans-serif;
+  font-family: "MS Sans Serif", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
   margin: 0;
-  background: url("/portfolio-website/desktop/screen_bg.jpg") center / cover fixed no-repeat;
+  background: url("/portfolio-website/desktop/screen_bg.png") center / cover fixed no-repeat;
   color: #1f2933;
+}
+
+/* Second wallpaper crossfades in and out on top of the first, producing
+   a slow day/night-style shimmer. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: url("/portfolio-website/desktop/screen_bg-2.png") center / cover fixed no-repeat;
+  opacity: 0;
+  animation: bg-shimmer 1s ease-in-out infinite;
+}
+
+@keyframes bg-shimmer {
+  0%, 42%  { opacity: 0; }
+  50%, 92% { opacity: 1; }
+  100%     { opacity: 0; }
 }
 
 a {
@@ -16,136 +56,556 @@ a {
   text-decoration: none;
 }
 
-
+/* ── Layout ──────────────────────────────────────────────── */
 
 .app-layout {
-  display: grid;
-  grid-template-columns: 220px 1fr;
   min-height: 100vh;
 }
 
-.navbar {
-  position: sticky;
+/* ── Top bar ──────────────────────────────────────────────
+   Purely decorative frosted menu bar, styled after the classic macOS
+   menu bar. Always on top of every window, like a real OS chrome. */
+
+.top-bar {
+  position: fixed;
   top: 0;
-  height: 100vh;
-  padding: 28px 20px;
-  /* background: #101820; */
-  color: #f7f5ef;
+  left: 0;
+  right: 0;
+  height: 20px;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 0 14px;
+  background: rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(16px) saturate(1.8);
+  -webkit-backdrop-filter: blur(16px) saturate(1.8);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 1px 6px rgba(0, 20, 60, 0.15);
 }
 
-.site-name {
-  display: block;
-  margin: 0 0 36px 8px;
-  font-size: 1.125rem;
-  font-weight: 700;
+.top-bar-star {
+  flex: none;
+  color: #fff;
+  filter: drop-shadow(0 1px 1px rgba(0, 20, 60, 0.4));
+}
+
+.top-bar-menu {
+  display: flex;
+  gap: 18px;
+}
+
+.top-bar-menu span {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.92);
+  text-shadow: 0 1px 1px rgba(0, 20, 60, 0.35);
+}
+
+/* ── Navbar / Desktop icon shelf ─────────────────────────── */
+
+.navbar {
+  position: fixed;
+  top: 20px;
+  left: 0;
+  width: 213px;
+  height: calc(100vh - 30px);
+  padding: 14px 21px;
+  z-index: 1;
 }
 
 .nav-links {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 18px 12px;
+  grid-template-columns: repeat(2, 77px);
+  gap: 22px 17px;
 }
 
 .desktop-shortcut {
-  display: grid;
-  justify-items: center;
-  gap: 7px;
-  min-height: 88px;
-  padding: 5px 2px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 3px;
   border: 1px solid transparent;
-  border-radius: 6px;
-  color: #d7e0e7;
+  border-radius: 3px;
+  background: none;
+  color: #f0f0f0;
   text-align: center;
-  transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease;
+  cursor: default;
+  font: inherit;
+  transition: background-color 100ms ease, border-color 100ms ease;
 }
 
 .desktop-shortcut:hover {
-  background: rgb(255 255 255 / 10%);
-  border-color: rgb(255 255 255 / 16%);
-  color: #ffffff;
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.22);
 }
 
 .desktop-shortcut:focus-visible {
   outline: 2px solid #7dd3fc;
-  outline-offset: 3px;
+  outline-offset: 2px;
 }
 
 .desktop-shortcut.active {
-  background: rgb(125 211 252 / 18%);
-  border-color: rgb(125 211 252 / 46%);
-  color: #ffffff;
+  background: rgba(0, 80, 200, 0.38);
+  border-color: rgba(100, 160, 255, 0.55);
 }
 
 .shortcut-icon {
   display: block;
-  width: 42px;
-  height: 42px;
+  width: 70px;
+  height: 70px;
   object-fit: contain;
-  filter: drop-shadow(0 3px 1px rgb(0 0 0 / 32%));
-  transition: transform 160ms ease, filter 160ms ease;
+  filter: drop-shadow(0 2px 1px rgba(0, 0, 0, 0.4));
+  transition: transform 100ms ease;
 }
 
-.desktop-shortcut:hover .shortcut-icon,
-.desktop-shortcut.active .shortcut-icon {
-  transform: translateY(-2px) scale(1.06);
-  filter: drop-shadow(0 5px 2px rgb(0 0 0 / 38%));
+.desktop-shortcut:hover .shortcut-icon {
+  transform: translateY(-1px);
 }
 
 .shortcut-label {
   max-width: 100%;
   overflow: hidden;
-  font-size: 0.75rem;
-  font-weight: 700;
-  line-height: 1.1;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7), 0 0 4px rgba(0, 0, 0, 0.4);
+  white-space: normal;
+}
+
+/* ── Glass windows ───────────────────────────────────────── */
+
+.desktop-window {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  min-width: 280px;
+  min-height: 180px;
+  max-width: calc(100vw - 8px);
+  max-height: calc(100vh - 8px);
+  resize: both;
+  overflow: hidden;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  background: rgba(195, 220, 255, 0.05);
+  backdrop-filter: blur(20px) saturate(1.6);
+  -webkit-backdrop-filter: blur(20px) saturate(1.6);
+  box-shadow:
+    0 0 0 1px rgba(120, 170, 255, 0.50),
+    0 28px 72px rgba(0, 26, 102, 0.7),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.window-titlebar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: none;
+  height: 34px;
+  padding: 0 10px;
+  border-bottom: 1px solid rgba(180, 210, 255, 0.45);
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.82) 0%,
+    rgba(215, 235, 255, 0.72) 50%,
+    rgba(185, 215, 255, 0.62) 100%
+  );
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  cursor: default;
+  user-select: none;
+  touch-action: none;
+}
+
+.window-title {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #1a3a6b;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
+  white-space: nowrap;
+  overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.main-content {
-  min-width: 0;
-}
-
-.page {
-  max-width: 900px;
-  padding: 64px;
-}
-
-.page h1 {
-  margin-top: 0;
-  font-size: 3rem;
-}
-
-
-.landing-page {
+.window-close {
   display: grid;
-  gap: 32px;
-  align-content: start;
+  place-items: center;
+  flex: none;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: radial-gradient(circle at 38% 32%, #ff9a8a, #e03020 75%);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  color: rgba(255, 255, 255, 0);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  transition: color 100ms ease, background 100ms ease, transform 80ms ease;
 }
 
-.landing-intro {
-  max-width: 520px;
+.window-close:hover {
+  background: radial-gradient(circle at 38% 32%, #ffb8aa, #f04030 75%);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.window-close:active {
+  transform: scale(0.88);
+}
+
+.window-back {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: radial-gradient(circle at 38% 32%, #9fd0ff, #2a7fe0 75%);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 100ms ease, transform 80ms ease;
+}
+
+.window-back:hover {
+  background: radial-gradient(circle at 38% 32%, #bfe0ff, #3a8ff0 75%);
+}
+
+.window-back:active {
+  transform: scale(0.88);
+}
+
+/* Custom resize handle for aspect-ratio-locked windows (e.g. Aquarium),
+   used instead of the browser's native corner handle so the ratio is
+   enforced reliably in every browser. */
+.window-resize-handle {
+  position: absolute;
+  right: 2px;
+  bottom: 2px;
+  width: 16px;
+  height: 16px;
+  cursor: nwse-resize;
+  touch-action: none;
+  background:
+    linear-gradient(
+      135deg,
+      transparent 0 40%,
+      rgba(10, 63, 168, 0.4) 40% 46%,
+      transparent 46% 56%,
+      rgba(10, 63, 168, 0.4) 56% 62%,
+      transparent 62% 72%,
+      rgba(10, 63, 168, 0.4) 72% 78%,
+      transparent 78%
+    );
+}
+
+/* ── Frame variant: a minimal, glossy window used for both the ambient
+   aquarium widget and the "Aquarium" nav icon's popup. Same titlebar/
+   close/resize as a normal window, just a lighter-blur, high-shine
+   glass theme instead of the solid blue gradient. ── */
+
+.desktop-window--frame {
+  position: relative;
+  background: rgba(220, 235, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(5px) saturate(2.4) brightness(1.1);
+  -webkit-backdrop-filter: blur(5px) saturate(2.4) brightness(1.1);
+  box-shadow:
+    0 0 0 1px rgba(120, 170, 255, 0.2),
+    0 20px 48px rgba(0, 30, 120, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    inset 0 -14px 26px -14px rgba(255, 255, 255, 0.3);
+}
+
+/* Diagonal glare sheen for the glossy look. Decorative, so pointer
+   events pass straight through to the controls beneath it. */
+.desktop-window--frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.4) 0%,
+    rgba(255, 255, 255, 0.1) 26%,
+    rgba(255, 255, 255, 0) 52%,
+    rgba(255, 255, 255, 0.16) 100%
+  );
+  mix-blend-mode: overlay;
+}
+
+.desktop-window--frame .window-titlebar {
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.36) 0%,
+    rgba(215, 235, 255, 0.18) 100%
+  );
+  border-bottom-color: rgba(255, 255, 255, 0.32);
+}
+
+.desktop-window--frame .window-title {
+  color: #e8f0ff;
+  text-shadow: 0 1px 2px rgba(0, 20, 60, 0.5);
+}
+
+.desktop-window--frame .window-body {
+  background: transparent;
+}
+
+.desktop-window--frame .aquarium-page {
+  padding: 3px;
+}
+
+.desktop-window--frame .aquarium {
+  border: none;
+  border-radius: 9px;
+  box-shadow: none;
+}
+
+.window-body {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  background: rgba(248, 252, 255, 0.88);
+  color: #1f2933;
+}
+
+.window-body::-webkit-scrollbar { width: 8px; height: 8px; }
+.window-body::-webkit-scrollbar-track { background: rgba(200, 220, 255, 0.2); }
+.window-body::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background: rgba(100, 150, 220, 0.45);
+}
+.window-body::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 150, 220, 0.7);
+}
+
+.window-body .page {
+  max-width: none;
+  padding: 20px 24px;
+}
+
+.window-body .page h1 {
+  margin-top: 0;
+  font-size: 1.75rem;
+}
+
+/* ── Profile / Landing card ──────────────────────────────── */
+
+.profile-card {
+  display: flex;
+  height: 100%;
+  min-height: 220px;
+}
+
+.profile-sidebar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 170px;
+  flex-shrink: 0;
+  padding: 22px 12px;
+  border-right: 1px solid rgba(180, 210, 255, 0.4);
+  background: rgba(210, 230, 255, 0.28);
+}
+
+/* Same frosty-glass recipe as .desktop-window--frame, scaled down to a
+   circular photo frame. */
+.profile-avatar {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  background: rgba(220, 235, 255, 0.1);
+  backdrop-filter: blur(5px) saturate(2.4) brightness(1.1);
+  -webkit-backdrop-filter: blur(5px) saturate(2.4) brightness(1.1);
+  font-size: 2.5rem;
+  box-shadow:
+    0 0 0 1px rgba(120, 170, 255, 0.2),
+    0 2px 10px rgba(0, 40, 160, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    inset 0 -8px 14px -8px rgba(255, 255, 255, 0.3);
+  overflow: hidden;
+}
+
+.profile-avatar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.4) 0%,
+    rgba(255, 255, 255, 0.1) 26%,
+    rgba(255, 255, 255, 0) 52%,
+    rgba(255, 255, 255, 0.16) 100%
+  );
+  mix-blend-mode: overlay;
+}
+
+.profile-avatar-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.profile-handle {
+  margin: 0;
+  font-size: 0.75rem;
+  color: #4a6fa5;
+  font-weight: 600;
+}
+
+.profile-status {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.7rem;
+  color: #5a7a9a;
+}
+
+.status-dot {
+  display: block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #4caf7d;
+  box-shadow: 0 0 4px rgba(76, 175, 100, 0.6);
+}
+
+.profile-main {
+  flex: 1;
+  min-width: 0;
+  padding: 18px 20px;
+}
+
+.profile-main h1 {
+  margin-top: 0;
+  margin-bottom: 6px;
+  font-size: 1.875rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  color: #1a3a6b;
+}
+
+.profile-bio {
+  margin: 0 0 14px;
+  font-size: 0.9375rem;
+  color: #3a5070;
+  line-height: 1.5;
+}
+
+.profile-hint {
+  margin: 0;
+  padding: 8px 12px;
+  border-radius: 6px;
+  background: rgba(180, 215, 255, 0.3);
+  border: 1px solid rgba(140, 190, 255, 0.35);
+  font-size: 0.8125rem;
+  color: #2a4a7a;
+}
+
+.typing-cursor {
+  animation: blink 0.8s step-end infinite;
+  margin-left: 1px;
+  color: #4a7abf;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+/* ── Project card ────────────────────────────────────────── */
+
+.project-card {
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid rgba(100, 150, 220, 0.3);
+  background: rgba(220, 235, 255, 0.4);
+  cursor: pointer;
+  transition: background 150ms ease;
+}
+
+.project-card:hover {
+  background: rgba(200, 220, 255, 0.6);
+}
+
+.project-card h3 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+  color: #1a3a6b;
+}
+
+.project-card p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #3a5070;
+}
+
+/* ── Aquarium page ───────────────────────────────────────── */
+
+.aquarium-page {
+  padding: 12px;
 }
 
 .aquarium {
   position: relative;
   width: 100%;
-  min-height: 280px;
+  min-height: 200px;
   aspect-ratio: 4482 / 1903;
   overflow: hidden;
   isolation: isolate;
-  border: 1px solid #6d8790;
-  border-radius: 8px;
+  border: 1px solid rgba(100, 150, 200, 0.5);
+  border-radius: 6px;
   background: url("/portfolio-website/aquarium/background.jpg") center / cover no-repeat;
-  box-shadow: 0 12px 28px rgb(16 24 32 / 20%);
+  box-shadow: 0 4px 16px rgba(0, 60, 120, 0.2);
 }
+
+/* ── Fish animations ─────────────────────────────────────── */
 
 .fish {
   position: absolute;
   z-index: 1;
-  pointer-events: none;
+  pointer-events: auto;
+  cursor: pointer;
   will-change: transform;
   animation-name: fish-cross;
   animation-timing-function: linear;
   animation-fill-mode: forwards;
+}
+
+.fish--fleeing {
+  z-index: 2;
+  filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.6));
+}
+
+.fish--fleeing .fish-image {
+  animation: fish-startle 0.25s ease-out;
+}
+
+@keyframes fish-startle {
+  0% { transform: scale(1); }
+  30% { transform: scale(1.18); }
+  100% { transform: scale(1); }
 }
 
 .fish-bob {
@@ -164,66 +624,551 @@ a {
 }
 
 @keyframes fish-cross {
-  /* using translate rather than left due to better GPU use
-   (without triggering layout recalculations on every frame) */
   to {
     transform: translateX(var(--fish-travel));
   }
 }
 
 @keyframes fish-bob {
-  0%,
-  100% {
-    translate: 0 -4px;
-  }
-
-  50% {
-    translate: 0 5px;
-  }
+  0%, 100% { translate: 0 -4px; }
+  50%       { translate: 0  5px; }
 }
 
-@media (max-width: 700px) {
-  .app-layout {
-    display: flex;
-    flex-direction: column;
-  }
+/* ── Mobile ──────────────────────────────────────────────── */
 
+@media (max-width: 700px) {
   .navbar {
     position: static;
     width: 100%;
     height: auto;
-    padding: 14px 16px 12px;
+    margin-top: 30px;
+    padding: 14px 11px;
   }
 
   .site-name {
-    margin: 0 0 12px;
+    margin: 0 0 10px;
   }
 
   .nav-links {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 6px;
-  }
-
-  .desktop-shortcut {
-    min-height: 66px;
-    gap: 4px;
-    padding: 3px 1px;
+    grid-template-columns: repeat(auto-fill, 50px);
+    gap: 11px 8px;
   }
 
   .shortcut-icon {
-    width: 31px;
-    height: 31px;
+    width: 34px;
+    height: 34px;
   }
 
-  .page {
-    padding: 32px 24px;
+  .shortcut-label {
+    font-size: 0.625rem;
   }
 
-  .landing-page {
-    gap: 24px;
+  .desktop-window {
+    width: calc(100vw - 12px) !important;
+    left: 6px !important;
+    top: auto !important;
+    bottom: 0 !important;
+    border-radius: 12px 12px 0 0;
   }
+}
 
-  .aquarium {
-    min-height: 220px;
-  }
+/* ── About page ──────────────────────────────────────────── */
+
+.about-list {
+  margin: 0 0 16px;
+  padding-left: 20px;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: #3a5070;
+}
+
+.about-footnote {
+  margin-top: 24px;
+  font-size: 0.75rem;
+  color: #6a86ad;
+}
+
+.about-footnote code {
+  background: rgba(100, 150, 220, 0.15);
+  padding: 1px 4px;
+  border-radius: 3px;
+}
+
+/* ── Projects file explorer ─────────────────────────────────
+   (the icon grid inside the Projects window) */
+
+.file-explorer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 210px);
+  gap: 18px;
+  padding: 28px;
+  align-content: start;
+}
+
+.file-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 10px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: none;
+  font: inherit;
+  cursor: default;
+  color: #1a3a6b;
+  text-align: center;
+}
+
+.file-item:hover {
+  background: rgba(100, 150, 230, 0.15);
+  border-color: rgba(100, 150, 230, 0.3);
+}
+
+.file-item:focus-visible {
+  outline: 2px solid #3d7fe0;
+  outline-offset: 2px;
+}
+
+.file-name {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  line-height: 1.3;
+  word-break: break-word;
+}
+
+.file-icon-preview {
+  display: block;
+  width: 150px;
+  height: 96px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 2px solid #0a3fa8;
+  background: #fff;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.28);
+}
+
+/* ── Project detail window ──────────────────────────────────── */
+
+.project-detail {
+  padding: 20px 24px;
+}
+
+.project-detail h1 {
+  margin: 0 0 4px;
+  font-size: 1.5rem;
+  color: #1a3a6b;
+}
+
+.project-detail-daterange {
+  margin: 0 0 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #4a6fa5;
+}
+
+.project-detail-summary {
+  margin: 0 0 20px;
+  font-size: 0.9375rem;
+  color: #3a5070;
+}
+
+.project-detail-section {
+  margin-bottom: 20px;
+}
+
+.project-detail-section h2 {
+  margin: 0 0 8px;
+  font-size: 0.9375rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #4a6fa5;
+  border-bottom: 1px solid rgba(100, 150, 220, 0.3);
+  padding-bottom: 4px;
+}
+
+.project-detail-about {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: #263750;
+  white-space: pre-line;
+}
+
+.tech-stack-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tech-pill {
+  padding: 4px 10px;
+  border-radius: 12px;
+  background: rgba(100, 150, 230, 0.18);
+  border: 1px solid rgba(100, 150, 230, 0.35);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #1a3a6b;
+}
+
+.project-links-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.project-links-list a {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #0a5fe0;
+  text-decoration: underline;
+}
+
+.project-links-list a:hover {
+  color: #0a3fa8;
+}
+
+/* ── Art slideshow ───────────────────────────────────────────
+   screen + thumbnail strip + prev/next controls, all inside the
+   glass window */
+
+.slideshow {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 12px;
+  gap: 10px;
+}
+
+.slideshow-screen {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+  border-radius: 4px;
+  border: 2px solid #0a3fa8;
+  background-color: #0a1a33;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.15), 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.slideshow-caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  padding: 6px 10px;
+  background: rgba(10, 26, 51, 0.72);
+  color: #e8f0ff;
+}
+
+.slideshow-title {
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+
+.slideshow-medium {
+  font-size: 0.6875rem;
+  opacity: 0.75;
+}
+
+.slideshow-thumbs {
+  flex: none;
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 4px 2px;
+}
+
+.slideshow-thumb {
+  flex: none;
+  width: 48px;
+  height: 36px;
+  padding: 0;
+  border: 2px solid rgba(100, 150, 220, 0.4);
+  border-radius: 3px;
+  background-color: #0a1a33;
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 100ms ease, border-color 100ms ease;
+}
+
+.slideshow-thumb:hover {
+  opacity: 1;
+}
+
+.slideshow-thumb.active {
+  opacity: 1;
+  border-color: #0a5fe0;
+}
+
+.slideshow-controls {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.slideshow-nav {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 28px;
+  border: 1px solid #3d95ff;
+  border-radius: 4px;
+  background: linear-gradient(to bottom, #4fa8ff, #0a5fe0);
+  color: #fff;
+  font-size: 0.75rem;
+  cursor: pointer;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.slideshow-nav:hover {
+  background: linear-gradient(to bottom, #6fbaff, #1a6ff0);
+}
+
+.slideshow-nav:active {
+  transform: scale(0.95);
+}
+
+.slideshow-counter {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #1a3a6b;
+}
+
+.slideshow-empty {
+  padding: 24px;
+  font-size: 0.875rem;
+  color: #3a5070;
+}
+
+/* ── Sticky note ─────────────────────────────────────────────
+   each one is its own window instance, so this only styles the
+   note itself — the glass titlebar/close button is shared chrome */
+
+.sticky-note {
+  height: 100%;
+  padding: 14px;
+  background: #fff3a3;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+  background-size: 100% 22px;
+}
+
+.sticky-note-text {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  resize: none;
+  background: transparent;
+  font-family: "Comic Sans MS", "Comic Sans", "MS Sans Serif", cursive, sans-serif;
+  font-size: 0.9375rem;
+  line-height: 22px;
+  color: #4a3b00;
+}
+
+.sticky-note-text::placeholder {
+  color: rgba(74, 59, 0, 0.4);
+}
+
+/* ── Project gallery (inside the project detail view) ───────── */
+
+.project-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.project-gallery-item {
+  position: relative;
+  margin: 0;
+  border: 1px solid rgba(100, 150, 220, 0.3);
+  border-radius: 6px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.project-gallery-image {
+  display: block;
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  cursor: zoom-in;
+  transition: transform 150ms ease, filter 150ms ease;
+}
+
+.project-gallery-item:hover .project-gallery-image {
+  transform: scale(1.05);
+  filter: brightness(0.9);
+}
+
+/* Magnifier hint that fades in on hover, so it's clear the image opens
+   a full view (on double-click). */
+.project-gallery-item::after {
+  content: "🔍";
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: rgba(10, 26, 51, 0.75);
+  color: #fff;
+  font-size: 13px;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 150ms ease, transform 150ms ease;
+  pointer-events: none;
+}
+
+.project-gallery-item:hover::after {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.project-gallery-caption {
+  padding: 6px 8px;
+  font-size: 0.75rem;
+  color: #3a5070;
+}
+
+/* ── Full-view image popout (double-click a gallery image) ───── */
+
+.image-viewer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 12px;
+  gap: 8px;
+  background: #0a1a33;
+}
+
+.image-viewer-frame {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.image-viewer-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 4px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+.image-viewer-caption {
+  flex: none;
+  margin: 0;
+  text-align: center;
+  font-size: 0.8125rem;
+  color: #e8f0ff;
+}
+
+/* ── Profile socials + GitHub activity ───────────────────────── */
+
+.profile-socials {
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.profile-socials a {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 8px;
+  border-radius: 5px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #1a3a6b;
+  background: rgba(255, 255, 255, 0.35);
+  border: 1px solid rgba(140, 190, 255, 0.35);
+  transition: background 100ms ease;
+}
+
+.profile-socials a:hover {
+  background: rgba(255, 255, 255, 0.65);
+}
+
+.profile-now {
+  margin-top: 16px;
+}
+
+.profile-now h2 {
+  margin: 0 0 8px;
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #4a6fa5;
+}
+
+.now-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.now-list li {
+  font-size: 0.8125rem;
+  color: #3a5070;
+}
+
+.now-list li strong {
+  color: #1a3a6b;
+  font-weight: 700;
+}
+
+.profile-github {
+  margin-top: 22px;
+}
+
+.profile-github h2 {
+  margin: 0 0 8px;
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #4a6fa5;
+}
+
+.profile-github-link {
+  display: block;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid rgba(100, 150, 220, 0.3);
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.profile-github-chart {
+  display: block;
+  width: 100%;
+  height: auto;
 }

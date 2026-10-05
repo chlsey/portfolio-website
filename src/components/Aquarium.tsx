@@ -15,7 +15,7 @@ function createFish(): SwimmingFish {
     id: crypto.randomUUID(),
     src: fishSources[Math.floor(Math.random() * fishSources.length)],
     y: randomBetween(12, 82),
-    size: randomBetween(60, 130),
+    size: randomBetween(10, 20), // % of tank width — scales with the aquarium
     duration: randomBetween(13, 24),
     direction: Math.random() > 0.5 ? "left" : "right",
   };
