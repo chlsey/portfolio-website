@@ -7,15 +7,15 @@ function About() {
                 I'm currently working at KORE Solutions on their backend and mobile teams. That said, I also enjoy doing design work, such as this portfolio! 
             </p>
 
-            <h2>What I do</h2>
+            <h2>My skills</h2>
             <ul className="about-list">
+                <li>Distributed systems backend development in Node.js and FastAPI</li>
                 <li>Frontend development with React &amp; TypeScript</li>
-                <li>UI/UX design with a love for retro aesthetics</li>
-                <li>Digital art &amp; illustration</li>
+                <li>Mobile development using Flutter</li>
+                <li>Experience with Docker, Azure Devops, Kubernetes, and databases (MongoDB and Postgres)</li>
             </ul>
 
             <p className="about-footnote">
-                Edit this content in <code>src/pages/About.tsx</code>.
             </p>
         </section>
     );
