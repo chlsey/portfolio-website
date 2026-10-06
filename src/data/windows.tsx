@@ -35,7 +35,7 @@ export const windowRegistry = {
     welcome:  { title: "Welcome",  content: <Landing />,     width: 920, height: 550, center: true },
     about:    { title: "About",    content: <About />,       width: 600, height: 440 },
     projects: { title: "Projects", content: <Projects />,    width: 750, height: 520, center: true },
-    art:      { title: "Art",      content: <Art />,         width: 640, height: 480 },
+    art:      { title: "Art",      content: <Art />,         width: 690, height: 600, center: true },
     hobbies:  { title: "Hobbies",  content: <Hobbies />,     width: 600, height: 440 },
     aquarium: {
         title: "Aquarium",
