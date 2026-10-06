@@ -32,7 +32,7 @@ const AQUARIUM_INSET_Y = 34 + 6;
 const AQUARIUM_WIDTH = 820;
 
 export const windowRegistry = {
-    welcome:  { title: "Welcome",  content: <Landing />,     width: 820, height: 450, center: true },
+    welcome:  { title: "Welcome",  content: <Landing />,     width: 920, height: 550, center: true },
     about:    { title: "About",    content: <About />,       width: 600, height: 440 },
     projects: { title: "Projects", content: <Projects />,    width: 750, height: 520, center: true },
     art:      { title: "Art",      content: <Art />,         width: 640, height: 480 },
