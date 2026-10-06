@@ -58,7 +58,7 @@ function Landing() {
             <div className="profile-main">
                 <TypingTitle name="Chelsey" />
                 <p className="profile-bio">
-                    Hi! I'm a software developer specializing in backend and fullstack development. Welcome!!
+                    Hi! I'm a fourth year computer science and philosophy student at the University of Toronto. Welcome!!
                 </p>
                 <p className="profile-hint">
                     💡 Click on any of the icons to find out more about me :]
