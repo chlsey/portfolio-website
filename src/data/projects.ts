@@ -111,7 +111,7 @@ export const projects: Project[] = [
         summary:
             "An accessible web app that clones a user's voice from an audio upload and turns it into a text-to-speech persona.",
         description:
-            "Voxify is an application thatlets users upload audio, turns it into a voice clone, and then uses that voice as a " +
+            "Voxify is an application that lets users upload audio, turns it into a voice clone, and then uses that voice as a " +
             "text-to-speech persona to personalize their experience. Accessibility was a core goal of the project.\n\n" +
             "Our team architected the data layer using SQLite alongside ChromaDB, storing structured application data " +
             "next to vector embeddings to support semantic search and AI-driven retrieval. I helped designed the backend " +
