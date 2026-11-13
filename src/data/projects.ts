@@ -183,8 +183,8 @@ export const projects: Project[] = [
             "An educational Ren'Py application for University of Toronto forensic science students, with an AI agent that gives real-time feedback.",
         description:
             "Built as a Software Developer at the University of Toronto's Faculty of Computer Science, Forensics " +
-            "I worked closely with faculty and domain experts to translate their " +
-            "pedagogical requirements into technical solutions.\n\n",
+            "I worked closely with faculty and forensic experts to translate their " +
+            "educational goals into a student-focused application.\n\n",
         techStack: ["Ren'Py", "Python", "JSON"],
         links: [
             { label: "GitHub", url: "https://github.com/Forensics-Pursuit/Forensics-Pursuit" },
