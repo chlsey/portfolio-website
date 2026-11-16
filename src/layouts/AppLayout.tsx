@@ -102,7 +102,7 @@ function createInitialWindows(): OpenWindow[] {
         {
             id: "sticky:default",
             title: "Sticky Note",
-            content: <StickyNote defaultText={"- finish portfolio\n- buy groceries\n - feed shadow"} />,
+            content: <StickyNote defaultText={"- finish portfolio\n- buy groceries\n- feed dizzy and magic"} />,
             x: sticky.x,
             y: sticky.y,
             z: 11,

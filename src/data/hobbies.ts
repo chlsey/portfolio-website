@@ -11,7 +11,8 @@ export type Hobby = {
 export const hobbies: Hobby[] = [
     { id: "hobby-1", title: "Hiking",   image: `${base}hobbies/hiking.jpg`, medium: "Went to Banff :]" },
     { id: "hobby-2", title: "Hanging with my dog",  image: `${base}hobbies/dog.jpg`, medium: "His name is 'the little guy'" },
-    { id: "hobby-3", title: "Drawing", image: `${base}hobbies/drawing.jpg`, medium: "Yeah, if I didn't make it clear enough." },
+    { id: "hobby-3", title: "Drawing", image: `${base}hobbies/drawing.jpg`, medium: "I liked sketchbooking! This was a statue representing Justice at the Royal Palace Amsterdam." },
     { id: "hobby-4", title: "Cooking", image: `${base}hobbies/cooking.jpg`, medium: "I like cooking recipes I find on Instagram reels..." },
     { id: "hobby-5", title: "Crafts", image: `${base}hobbies/crafts.jpg`, medium: "Made this keychain over Christmas last year." },
+    { id: "hobby-6", title: "Fostering cats", image: `${base}hobbies/cats.png`, medium: "Currently fostering two kittens, Dizzy and Magic!" },
 ];

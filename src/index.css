@@ -1044,6 +1044,57 @@ a {
   transform: scale(1);
 }
 
+/* Video items: play button over the thumbnail; click swaps in the player. */
+.project-gallery-item.is-video::after {
+  display: none;
+}
+
+.project-gallery-item.is-video:hover .project-gallery-image {
+  transform: none;
+}
+
+.project-gallery-video-thumb {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: #000;
+  cursor: pointer;
+}
+
+.project-gallery-item.is-video .project-gallery-image {
+  cursor: pointer;
+}
+
+.project-gallery-play {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  padding-left: 3px;
+  border-radius: 50%;
+  background: rgba(10, 26, 51, 0.75);
+  color: #fff;
+  font-size: 15px;
+  transition: transform 150ms ease, background 150ms ease;
+}
+
+.project-gallery-video-thumb:hover .project-gallery-play {
+  transform: scale(1.1);
+  background: rgba(10, 26, 51, 0.9);
+}
+
+.project-gallery-video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
+}
+
 .project-gallery-caption {
   padding: 6px 8px;
   font-size: 0.75rem;

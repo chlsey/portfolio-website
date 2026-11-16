@@ -8,6 +8,6 @@ export const currentlyReading: Book[] = [
 ];
 
 export const favoriteSong = {
-    title: "No Soul to Save",
-    artist: "American Football",
+    title: "God Figure",
+    artist: "daine",
 };
