@@ -146,7 +146,7 @@ export const projects: Project[] = [
             "Squill helps prospective graduate students get past the blank page when writing a Statement of Purpose. " +
             "Users fill in their background, and a multi-step LangGraph agent generates tailored, categorized " +
             "questions that guide them toward a strong draft, which they can answer, refine, and export as text. " +
-            "It won at UofTHacks!!\n\n" +
+            "It won at UofTHacks!\n\n" +
             "We engineered an end-to-end streaming pipeline between the Flask/LangGraph backend and the Next.js " +
             "frontend using HTTP response streaming and NDJSON, so users can watch live agent progress, PII " +
             "detection, and final question generation as it happens. Because applicants share personal details, " +

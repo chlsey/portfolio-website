@@ -8,9 +8,10 @@ const AVATAR_SRC = `${import.meta.env.BASE_URL}profile/avatar.jpg`;
 const SOCIAL_LINKS: { label: string; href: string; icon: string }[] = [
     { label: "GitHub", href: `https://github.com/${GITHUB_USERNAME}`, icon: "🐙" },
     { label: "LinkedIn", href: 'https://www.linkedin.com/in/chelseyjuntingwang', icon: "💼" },
-    { label: "Instagram (art)", href: 'https://www.instagram.com/peachbowlss', icon: "🎨" },
+    { label: "Instagram", href: 'https://www.instagram.com/peachbowlss', icon: "🎨" },
     { label: "Pinterest", href: 'https://ca.pinterest.com/chelsuauah/_created/', icon: "📌" },
     { label: "chelseywang0219 @gmail.com", href: `mailto:${EMAIL}`, icon: "✉️" },
+    { label: "Something to read if you're bored :]", href: 'https://theamericanscholar.org/joyas-volardores/', icon: "📚" },
 ];
 
 function Landing() {
